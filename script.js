@@ -1,6 +1,7 @@
 const themeToggle = document.querySelector("#theme-toggle");
 const themeIcon = themeToggle.querySelector(".theme-icon");
 const themeLabel = themeToggle.querySelector(".theme-label");
+const navbarLogo = document.querySelector(".site-header .logo img");
 const year = document.querySelector("#year");
 const siteHeader = document.querySelector(".site-header");
 
@@ -15,17 +16,23 @@ function updateThemeButton(isDark) {
   );
 }
 
+function updateNavbarLogo(isDark) {
+  navbarLogo.src = isDark ? navbarLogo.dataset.darkSrc : navbarLogo.dataset.lightSrc;
+}
+
 const savedTheme = localStorage.getItem("portfolio-theme");
 const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
 const startInDarkMode = savedTheme ? savedTheme === "dark" : prefersDark;
 
 document.body.classList.toggle("dark", startInDarkMode);
 updateThemeButton(startInDarkMode);
+updateNavbarLogo(startInDarkMode);
 
 themeToggle.addEventListener("click", () => {
   const isDark = document.body.classList.toggle("dark");
   localStorage.setItem("portfolio-theme", isDark ? "dark" : "light");
   updateThemeButton(isDark);
+  updateNavbarLogo(isDark);
 });
 
 let previousScrollPosition = window.scrollY;
